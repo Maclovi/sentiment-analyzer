@@ -9,20 +9,22 @@ x-healthcheck-interval: &hc-interval
   retries: 5
   start_period: 10s
 
-x-api-environment: &api-env
-  UVICORN_HOST: ${UVICORN_HOST}
-  UVICORN_PORT: ${UVICORN_PORT}
+x-api-environment: &api-environment
+  ANALYZER_UVICORN_HOST: ${ANALYZER_UVICORN_HOST:-0.0.0.0}
+  ANALYZER_UVICORN_PORT: ${ANALYZER_UVICORN_PORT:-8008}
 
 services:
   nginx:
     <<: *default
-    build:
-      context: .
-      dockerfile: ./deploy/nginx/Dockerfile
+    image: nginx:stable-alpine
     profiles: ["analyzer"]
     container_name: analyzer.nginx
     hostname: analyzer.nginx
-    environment: *api-env
+    environment:
+      <<: *api-environment
+    volumes:
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./deploy/nginx/templates:/etc/nginx/templates
     ports:
       - 80:80
     depends_on:
@@ -31,17 +33,20 @@ services:
 
   api:
     <<: *default
-    build: ./deploy/nginx
+    build:
+      context: .
+      dockerfile: ./deploy/analyzer/Dockerfile
     profiles: ["analyzer"]
     container_name: analyzer.api
     hostname: analyzer.api
-    environment: *api-env
+    environment:
+      <<: *api-environment
     command: just serve
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "curl -fsSL http://localhost:${UVICORN_PORT}/v1/healthcheck/",
+          "curl -fsSL http://localhost:${ANALYZER_UVICORN_PORT}/v1/healthcheck/",
         ]
       <<: *hc-interval
 

@@ -11,16 +11,13 @@ where = ["src"]
 [tool.setuptools.dynamic]
 version = { attr = "analyzer.__version__" }
 
-[project.scripts]
-analyzer = "analyzer.__main__:cli"
-
 [project]
-name = "sentiment_analyzer"
+name = "analyzer"
 dynamic = ["version"]
-description = "Sentiment Analyzer is a tool designed to automatically detect the emotional tone of text messages. It analyzes input text and classifies it as either positive or negative based on word choice and emotional context."
+description = "Sentiment Analyzer is a tool designed to automatically detect the emotional tone of text messages."
 requires-python = ">=3.10"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "Apache" }
 authors = [
     { name = "Sergey Yavorsky", email = "maclovi.dev@gmail.com" },
 ]
@@ -40,7 +37,10 @@ dependencies = [
     "uvicorn==0.34.3",
     "httptools==0.6.4",
     "orjson==3.10.18",
-    "transformers[torch]==4.52.4",
+    # Neural
+    # "transformers[torch]==4.52.4",
+    # Dependency injection
+    "dishka==1.6.0",
 ]
 
 [project.optional-dependencies]
