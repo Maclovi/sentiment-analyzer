@@ -1,0 +1,50 @@
+x-default: &default
+  restart: unless-stopped
+  networks:
+    - overlay
+
+x-healthcheck-interval: &hc-interval
+  interval: 30s
+  timeout: 60s
+  retries: 5
+  start_period: 10s
+
+x-api-environment: &api-env
+  UVICORN_HOST: ${UVICORN_HOST}
+  UVICORN_PORT: ${UVICORN_PORT}
+
+services:
+  nginx:
+    <<: *default
+    build:
+      context: .
+      dockerfile: ./deploy/nginx/Dockerfile
+    profiles: ["analyzer"]
+    container_name: analyzer.nginx
+    hostname: analyzer.nginx
+    environment: *api-env
+    ports:
+      - 80:80
+    depends_on:
+      api:
+        condition: service_healthy
+
+  api:
+    <<: *default
+    build: ./deploy/nginx
+    profiles: ["analyzer"]
+    container_name: analyzer.api
+    hostname: analyzer.api
+    environment: *api-env
+    command: just serve
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fsSL http://localhost:${UVICORN_PORT}/v1/healthcheck/",
+        ]
+      <<: *hc-interval
+
+networks:
+  overlay:
+    driver: bridge
