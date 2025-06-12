@@ -25,9 +25,10 @@ jobs:
           version: "latest"
           enable-cache: true
           cache-dependency-glob: "pyproject.toml"
+      - uses: extractions/setup-just@v3
 
       - name: Install Dependencies and library
-        run: uv pip install --system -e .[dev]
+        run: uv pip install --system .[dev]
 
       - name: Load cached Pre-Commit Dependencies
         id: cached-pre-commit-dependencies
@@ -36,6 +37,5 @@ jobs:
           path: ~/.cache/pre-commit/
           key: pre-commit-4|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
 
-      - uses: extractions/setup-just@v3
       - name: Execute Pre-Commit
         run: just pre-commit

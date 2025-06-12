@@ -37,13 +37,12 @@ dependencies = [
     "uvicorn==0.34.3",
     "httptools==0.6.4",
     "orjson==3.10.18",
-    # Neural
-    # "transformers[torch]==4.52.4",
     # Dependency injection
     "dishka==1.6.0",
 ]
 
 [project.optional-dependencies]
+ai = ["transformers[torch]==4.52.4"]
 test = [
     "coverage[toml]==7.8.2",
     "pytest==8.4.0",
@@ -59,7 +58,7 @@ lint = [
     "semgrep==1.124.0",
 ]
 dev = [
-    "sentiment_analyzer[test,lint]",
+    "analyzer[test,lint]",
     "pre-commit==4.2.0",
     "detect-secrets==1.5.0",
 ]
