@@ -51,12 +51,11 @@ default:
 [group("Test")]
 @test *args:
     coverage run -m pytest -x --ff {{ args }}
-    just stop
 
 
 [doc("Run test with coverage")]
 [group("Test")]
-@cov: test
+@test-cov: test
     coverage combine
     coverage report --show-missing --skip-covered --sort=cover --precision=2
     rm .coverage*
