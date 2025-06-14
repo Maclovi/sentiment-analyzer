@@ -39,3 +39,25 @@ jobs:
 
       - name: Execute Pre-Commit
         run: just pre-commit
+
+  tests:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+      - uses: extractions/setup-just@v3
+
+      - name: Install Dependencies and library
+        run: uv pip install --system .[dev]
+      - run: just test

@@ -1,14 +1,17 @@
 from unittest.mock import MagicMock
 
+from analyzer.infrastructure.neural import PipelineAdapter
 from analyzer.usecases.interactors import (
     SentimentAnalyzerHandler,
     SentimentInput,
 )
 
 
-def test_sentiment_analyzer_handler(pipeline_neural_fake: MagicMock) -> None:
-    interactor = SentimentAnalyzerHandler(pipeline_neural_fake)
+def test_sentiment_analyzer_handler_with_fake_neural() -> None:
+    mock_pipe = MagicMock(return_value=[{"label": "POSITIVE", "score": 0.9}])
+    adapter = PipelineAdapter(pipe=mock_pipe)
+    interactor = SentimentAnalyzerHandler(adapter)
     output = interactor.handle(SentimentInput("positive text"))
 
-    assert output.label in ("POSITIVE", "NEGATIVE")
-    assert 0.0 <= output.score < 1.0
+    assert output.label == "POSITIVE"
+    assert output.score == 0.9  # noqa: PLR2004
