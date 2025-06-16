@@ -22,7 +22,7 @@ default:
 [doc("Run server application")]
 [group("Common")]
 @serve:
-    python -m analyzer "--serve"
+    python -m analyzer
 
 
 [doc("Lint check")]

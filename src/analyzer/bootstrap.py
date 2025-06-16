@@ -2,7 +2,7 @@ import os
 
 from fastapi import APIRouter, FastAPI
 
-from analyzer.configs import ASGIConfig, Configs
+from analyzer.infrastructure.configs import ASGIConfig, Configs
 from analyzer.presentation.v1.routes import healthcheck
 
 
