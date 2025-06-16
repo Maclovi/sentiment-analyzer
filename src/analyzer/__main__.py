@@ -1,12 +1,12 @@
 import uvicorn
 
 from analyzer.bootstrap import setup_configs
-from analyzer.infrastructure.web import create_app_production
+from analyzer.infrastructure.web import create_app
 
 
 def run_web() -> None:
     configs = setup_configs()
-    app = create_app_production()
+    app = create_app()
     (host, port) = (configs.asgi.host, configs.asgi.port)
     uvicorn.run(app, host=host, port=port)
 

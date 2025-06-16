@@ -5,7 +5,7 @@ from analyzer import __version__
 from analyzer.bootstrap import setup_routes
 
 
-def create_app_production() -> FastAPI:
+def create_app() -> FastAPI:
     app = FastAPI(
         default_response_class=ORJSONResponse,
         version=__version__,
