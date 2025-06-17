@@ -10,8 +10,8 @@ x-healthcheck-interval: &hc-interval
   start_period: 10s
 
 x-api-environment: &api-environment
-  ANALYZER_UVICORN_HOST: ${ANALYZER_UVICORN_HOST:-0.0.0.0}
-  ANALYZER_UVICORN_PORT: ${ANALYZER_UVICORN_PORT:-8008}
+  ANALYZER_UVICORN_HOST: $ANALYZER_UVICORN_HOST
+  ANALYZER_UVICORN_PORT: $ANALYZER_UVICORN_PORT
 
 services:
   nginx:

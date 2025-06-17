@@ -15,8 +15,8 @@ default:
 
 [doc("Sync latest versions of packages")]
 [group("Common")]
-@venv-sync deps="dev,ai":
-    uv pip install -e ".[{{ deps }}]"
+@venv-sync:
+    uv pip install -e ".[dev]"
 
 
 [doc("Run server application")]

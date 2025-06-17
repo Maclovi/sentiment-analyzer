@@ -1,20 +1,25 @@
-from typing import NamedTuple
+from dataclasses import dataclass
+from typing import final
 
 from analyzer.usecases.interfaces import SentimentNeural
 
 
-class SentimentInput(NamedTuple):
+@dataclass(slots=True, frozen=True)
+class SentimentInput:
     text: str
 
 
-class SentimentOutput(NamedTuple):
+@dataclass(slots=True, frozen=True)
+class SentimentOutput:
     label: str
     score: float
 
 
-class SentimentAnalyzerHandler(NamedTuple):
-    neural: SentimentNeural
+@final
+class SentimentAnalyzerHandler:
+    def __init__(self, neural: SentimentNeural) -> None:
+        self._neural = neural
 
     def handle(self, data: SentimentInput) -> SentimentOutput:
-        result = self.neural.analyze(data.text)
+        result = self._neural.analyze(data.text)
         return SentimentOutput(**result)
