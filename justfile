@@ -9,14 +9,14 @@ default:
 [group("Common")]
 @bootstrap:
     cp .env.dist .env
-    uv pip install -e ".[dev]"
+    uv pip install -e ".[dev,ai]"
     pre-commit install
 
 
 [doc("Sync latest versions of packages")]
 [group("Common")]
 @venv-sync:
-    uv pip install -e ".[dev]"
+    uv pip install -e ".[dev,ai]"
 
 
 [doc("Run server application")]

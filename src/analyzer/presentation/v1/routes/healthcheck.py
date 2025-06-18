@@ -7,6 +7,6 @@ router = APIRouter(
 )
 
 
-@router.get("/", status_code=status.HTTP_200_OK)
+@router.get("", status_code=status.HTTP_200_OK)
 async def get_status() -> dict[str, str]:
     return {"message": "ok", "status": "success"}

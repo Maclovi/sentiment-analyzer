@@ -7,16 +7,16 @@ from analyzer.usecases.interactors import (
     SentimentOutput,
 )
 
-route = APIRouter(
+router = APIRouter(
     prefix="/sentiment",
     tags=["Sentiment"],
     route_class=DishkaRoute,
 )
 
 
-@route.post("", summary="Sentiment analyzer text")
+@router.post("", summary="Sentiment analyzer text")
 async def sentiment_text(
-    text: str,
+    data: SentimentInput,
     interactor: FromDishka[SentimentAnalyzerHandler],
 ) -> SentimentOutput:
-    return interactor.handle(SentimentInput(text))
+    return interactor.handle(data)

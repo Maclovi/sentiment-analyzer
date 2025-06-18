@@ -1,7 +1,6 @@
-from typing import TYPE_CHECKING, cast
+from typing import cast
 
-if TYPE_CHECKING:
-    from .annotations import Pipeline
+from .annotations import Pipeline  # noqa: TC001
 
 
 def create_pipeline() -> "Pipeline":

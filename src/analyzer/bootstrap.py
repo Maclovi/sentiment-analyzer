@@ -3,7 +3,7 @@ import os
 from fastapi import APIRouter, FastAPI
 
 from analyzer.infrastructure.configs import ASGIConfig, Configs
-from analyzer.presentation.v1.routes import healthcheck
+from analyzer.presentation.v1.routes import healthcheck, sentiment
 
 
 def setup_configs() -> Configs:
@@ -18,5 +18,5 @@ def setup_configs() -> Configs:
 def setup_routes(app: FastAPI, /) -> None:
     router_v1 = APIRouter(prefix="/v1")
     router_v1.include_router(healthcheck.router)
-
+    router_v1.include_router(sentiment.router)
     app.include_router(router_v1)
