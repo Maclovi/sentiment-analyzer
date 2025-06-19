@@ -39,6 +39,8 @@ dependencies = [
     "orjson==3.10.18",
     # Dependency injection
     "dishka==1.6.0",
+    # GraphQL
+    "strawberry-graphql==0.274.2",
 ]
 
 [project.optional-dependencies]
