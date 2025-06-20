@@ -55,7 +55,8 @@ default:
 
 [doc("Run test with coverage")]
 [group("Test")]
-@test-cov: test
+@test-cov *args:
+    just test {{ args }}
     coverage combine
     coverage report --show-missing --skip-covered --sort=cover --precision=2
     rm .coverage*

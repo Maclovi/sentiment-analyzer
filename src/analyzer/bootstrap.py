@@ -20,5 +20,5 @@ def setup_routes(app: FastAPI, /) -> None:
     router_v1 = APIRouter(prefix="/v1")
     router_v1.include_router(healthcheck.router)
     router_v1.include_router(sentiment.router)
-    router_v1.include_router(graphql.router, prefix="/graphql")
+    router_v1.include_router(graphql.router)
     app.include_router(router_v1)
